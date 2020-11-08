@@ -100,7 +100,13 @@ void clearNodeR(BST_NODE** node_ptr); //called by clear
 ** results:
     removes all the nodes of the BST.
 */
-void clear(BST* B); //calls clearNodeR
+void clear(BST* B); //calls 
+	//you may still use clearNodeR while
+	//you are not yet done implementing the delete function
+	
+	//In-Lab Exercises: when you are done with your delete function,
+	//                  use this function to test your delete function
+	//                  call delete repeatedly to empty/clear the BST
 
 /*
 ** function: delete
@@ -111,22 +117,14 @@ void clear(BST* B); //calls clearNodeR
 ** results:
     finds `key` and removes the key from BST `B`
 */
-
 void delete(BST* B, int key);
 BST_NODE *  deleteNode(BST_NODE * node, int key);
-
-//NOTES:	
-//NOT yet required to be implemented in the Pre-Lab
-//posting this in advance in preparation as MAIN In-Lab Exercise
-
-
+//In-Lab MAIN Exercise: fill the missing codes for this function
 //study the lecture slides and the notes below
 //make sure to draw your solution first before typing anything
 
-//In relation to the Pre-Lab exercise, 
-//it calls the descendantSuccessor when deleting a node with two children
-
-
+//calls the descendantSuccessor when deleting a node with two children
+//will be called and tested using the clear function
 
 /*
 ** function: minimum
@@ -164,6 +162,12 @@ BST_NODE* descendantSuccessor(BST_NODE *node);
    //it should return the minimum of the right subtree of the given node
    //you may call the minimum function
    
+void inorderWalk(BST * B);
+void preorderWalk(BST * B);
+void postorderWalk(BST * B);
 
+void printInOrder(BST_NODE * node);
+void printPreOrder(BST_NODE * node );
+void printPostOrder(BST_NODE * node);
 
 #endif

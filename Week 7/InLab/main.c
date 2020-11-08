@@ -22,7 +22,8 @@ int main(){
 			case '-':
 				scanf(" %d\n", &key);
 				printf("Removing node with key: %d\n", key);
-				delete(B, key); // result is unused. print if u want
+				//result = delete(B, key); // result is unused. print if u want
+				delete(B, key);
 				break;
 			case '?':
 				scanf(" %d\n", &key);
@@ -34,7 +35,7 @@ int main(){
 				showTree(B);
 				printf("\n");
 				break;
-			/*case '<':
+			case '<':
 				printf("Pre-order Traversal: ");
 				preorderWalk(B);
 				printf("\n");
@@ -48,8 +49,7 @@ int main(){
 				printf("In-order Traversal: ");
 				inorderWalk(B);
 				printf("\n");
-				break;
-			*/			
+				break;		
 			case 'E':
 				printf("BST %s empty.\n", isEmpty(B)?"is":"is not");
 				break;

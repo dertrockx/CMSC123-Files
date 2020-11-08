@@ -151,6 +151,12 @@ BST_NODE* minimum(BST_NODE *node);
 */
 BST_NODE* descendantSuccessor(BST_NODE *node);
 
+void inorderWalk(BST * B);
+void preorderWalk(BST * B);
+void postorderWalk(BST * B);
 
+void printInOrder(BST_NODE * node);
+void printPreOrder(BST_NODE * node );
+void printPostOrder(BST_NODE * node);
 
 #endif

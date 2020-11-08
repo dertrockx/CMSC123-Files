@@ -143,15 +143,17 @@ void clearNodeR(BST_NODE** node_ptr){
     removes all the nodes of the BST.
 */
 void clear(BST* B){
-	//recursively remove all the node
-	clearNodeR(&(B->root)); 
-	//NOTE: In the BST deletion exercise you have to 
-	//      have to replace this with a reapeated 
-	//      delete function call
-	// while(!isEmpty(B)){ 
-	// 	delete(B,B->root->key); 
-	// 	showTree(B); 
-	// }					
+	
+	// clearNodeR(&(B->root)); //you may still use this while
+	                        //you are not yet done implementing the delete function
+	
+	//In-Lab Exercise:  when you are done with your delete function,
+	//                  comment out clearNodeR(&(B->root));
+	//                  uncomment the next line to test your delete function
+	while(!isEmpty(B)){ 
+		delete(B,B->root->key); 
+		showTree(B); 
+	}					
 	
 }
 
@@ -164,43 +166,77 @@ void clear(BST* B){
 ** results:
     finds `key` and removes the key from BST `B`
 */
-
-
 void delete(BST* B, int key){
 
 	// basecase
 	if(B->root == NULL) return;
-	BST_NODE * root = B->root;
-	deleteNode(root, key);
+	B->root = deleteNode(B->root , key);
 }
 
-BST_NODE *  deleteNode(BST_NODE * node, int key){
-	if(node == NULL) return node;
-	BST_NODE * temp;
-	if( key < node->key ){
-		node->left = deleteNode(node->left, key);
-	} else if( key > node->key ) {
-		node->right = deleteNode(node->right, key);
-	} else {
-		// node with only one child or no child
-		if( node->left == NULL ){
-			temp = node->right;
-			free(node);
-			return temp;
-		}else if ( node->right == NULL ){
-			temp = node->left;
-			free(node);
-			return temp;
-		} else {
-			// node wit two children: get descendantSuccessor
-			temp = minimum( node->right );
-			// copy the key of successor to this node
-			node->key = temp->key;
-			// delete the successor
-			node->right = deleteNode( node->right, temp->key);
-		}
-	}
-	return node;
+BST_NODE *  deleteNode(BST_NODE * root, int key){
+	// / base case 
+    
+    if (root == NULL) return root; 
+    // printf("a\n");
+    
+    // If the key to be deleted is smaller than the root's key, 
+    // then it lies in left subtree 
+    if (key < root->key) 
+    {
+        root->left = deleteNode(root->left, key); 
+        // printf("b\n");
+    }
+        
+    // If the key to be deleted is greater than the root's key, 
+    // then it lies in right subtree 
+    else if (key > root->key) {
+        root->right = deleteNode(root->right, key); 
+        // printf("c\n");
+    }
+    // if key is same as root's key, then This is the node 
+    // to be deleted 
+    else
+    { 
+        // printf("d\n");
+        // node with only one child or no child 
+        if (root->left == NULL) 
+        { 
+            // printf("e\n");
+            BST_NODE * temp = root->right; 
+            // printf("e1\n");
+            free(root); 
+            // printf("e2\n");
+            return temp; 
+            
+            
+        } 
+        else if (root->right == NULL) 
+        { 
+            // printf("f\n");
+            BST_NODE * temp = root->left; 
+            // printf("f1\n");
+            free(root); 
+            // printf("f2\n");
+            
+            return temp; 
+        } 
+  
+        // node with two children: Get the inorder successor (smallest 
+        // in the right subtree) 
+        // printf("g\n");
+        BST_NODE * temp = minimum(root->right); 
+        // printf("h\n");
+        // Copy the inorder successor's content to this node 
+        root->key = temp->key; 
+        // printf("i\n");
+        // Delete the inorder successor 
+        // printf("j\n");
+        if( root->right != NULL )
+            root->right = deleteNode(root->right, temp->key); 
+        else 
+            root->left = deleteNode(root->left, temp->key);
+    } 
+    return root; 
 
 
 }
@@ -245,4 +281,46 @@ BST_NODE* descendantSuccessor(BST_NODE *node){
    BST_NODE * successor = minimum(startNode);
    return(successor);
    
+}
+
+void inorderWalk(BST * B){
+	printInOrder(B->root);
+}
+
+void preorderWalk(BST * B){
+	printPreOrder(B->root);
+}
+
+void postorderWalk(BST * B){
+	printPostOrder(B->root);
+}
+
+void printInOrder(BST_NODE* node) {
+	if( node->left != NULL ){
+		printInOrder( node->left );
+	}
+	printf("%d ", node->key);
+	if( node->right != NULL){
+		printInOrder( node->right );
+	}
+}
+
+void printPreOrder(BST_NODE * node){
+	printf("%d ", node->key);
+	if( node->left != NULL ){
+		printPreOrder( node->left );
+	}
+	if( node->right != NULL){
+		printPreOrder( node->right );
+	}
+}
+
+void printPostOrder(BST_NODE * node){
+	if( node->left != NULL ){
+		printPostOrder( node->left );
+	}
+	if( node->right != NULL){
+		printPostOrder( node->right );
+	}
+	printf("%d ",node->key);
 }
