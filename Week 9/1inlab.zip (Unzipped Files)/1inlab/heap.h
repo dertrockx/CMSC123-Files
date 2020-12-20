@@ -1,15 +1,15 @@
 #ifndef _HEAP_H_
 #define _HEAP_H_
 
-typedef struct heap_tag
-{
-     int *heap;
-     int size;
-     int maxSize;
-     int type;
+typedef struct heap_tag {
+  int *heap;
+  int size;
+  int maxSize;
+  int type;
 } HEAP;
 
 void printHeap(HEAP *H);
+
 
 /*
  *  CREATE HEAP
@@ -21,7 +21,8 @@ void printHeap(HEAP *H);
     initializes fields of the structure
     returns the created heap
 */
-HEAP *createHeap(int maxSize, int type);
+HEAP* createHeap(int maxSize, int type);
+
 
 /*
  *  IS FULL
@@ -32,6 +33,7 @@ HEAP *createHeap(int maxSize, int type);
 */
 int isFull(HEAP *H);
 
+
 /*
  *  IS EMPTY
  *  requirements: none
@@ -40,6 +42,7 @@ int isFull(HEAP *H);
       otherwise return 0
 */
 int isEmpty(HEAP *H);
+
 
 /*
  *  CLEAR
@@ -51,6 +54,7 @@ int isEmpty(HEAP *H);
 */
 void clear(HEAP *H);
 
+
 /*
  *  INSERT
  *  requirements:
@@ -60,5 +64,30 @@ void clear(HEAP *H);
       inserts `key` to the `heap`
 */
 void insert(HEAP *H, int key);
+
+
+/*
+ *  DELETE M
+ *  requirements:
+      a non-null HEAP pointer
+      a non-empty *heap
+ *  results:
+      removes the minimum value (root) from the heap (if MINHEAP)
+	  removes the maximum value (root) from the heap (if MAXHEAP)
+      returns the deleted value
+*/
+int deleteM(HEAP *H);
+
+
+/*
+ *  HEAP SORT
+ *  requirements:
+      a non-null HEAP pointer
+      a non-empty *heap
+ *  results:
+ 	  returns an array containing the sorted values of the heap
+	  (must not modify the original heap)
+*/
+int *heapSort(HEAP *H);
 
 #endif
