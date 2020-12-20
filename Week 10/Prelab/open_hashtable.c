@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//insert other headers here
 
+//print contents of the hash table
 void printTable(FILE *fp, HASH_TABLE *H)
 {
 	DATA *temp;
@@ -18,6 +18,7 @@ void printTable(FILE *fp, HASH_TABLE *H)
 	for (index = 0; index < H->tableSize; index++)
 	{
 		temp = H->list[index];
+
 		fprintf(fp, "Cell#%d: ", index);
 		if (temp)
 		{
@@ -34,6 +35,7 @@ void printTable(FILE *fp, HASH_TABLE *H)
 	}
 }
 
+//return instance of a hash table given table size
 HASH_TABLE *createHashTable(int tableSize)
 {
 	HASH_TABLE *h;
@@ -46,6 +48,8 @@ HASH_TABLE *createHashTable(int tableSize)
 
 	for (i = 0; i < tableSize; i++)
 	{
+		// since a pointer is just an array
+		// we access each succeeding pointer using an array index
 		h->list[i] = NULL;
 	}
 
@@ -59,6 +63,7 @@ int isEmpty(HASH_TABLE *h)
 		return 1;
 	return 0;
 }
+//return 1 for full, 0 for not
 int isFull(HASH_TABLE *h)
 {
 	if (h->size == h->tableSize)
@@ -66,6 +71,7 @@ int isFull(HASH_TABLE *h)
 	return 0;
 }
 
+//given character key, return hashed index
 int hash(char *key, int mod)
 {
 	int i = 0;
@@ -79,6 +85,8 @@ int hash(char *key, int mod)
 	return sum % mod;
 }
 
+//check if the given key is already found in the hashed index
+// @returns DATA node
 DATA *checkIndex(HASH_TABLE *H, char *key, int array_index)
 {
 	int i;
@@ -100,6 +108,10 @@ DATA *checkIndex(HASH_TABLE *H, char *key, int array_index)
 	return temp;
 }
 
+//hash the index corresponding given key
+//check if node is found in the hashed index
+//if not, insert node on the linked list attached to the hashed index
+//if found, print error
 void put(FILE *fp, HASH_TABLE *H, char *key, char *val)
 {
 	int array_index = hash(key, H->tableSize);
@@ -109,7 +121,7 @@ void put(FILE *fp, HASH_TABLE *H, char *key, char *val)
 	{
 		temp = (DATA *)malloc(sizeof(DATA));
 		temp->next = temp->prev = NULL;
-		temp->key = (char *)malloc(sizeof(char) * 20);
+		temp->key = "";
 		strcpy(temp->key, key);
 		temp->value = (char *)malloc(sizeof(char) * 100);
 		strcpy(temp->value, val);
@@ -134,6 +146,8 @@ int find(HASH_TABLE *H, char *key)
 	return -1;
 }
 
+//hash key
+//given hashed index, remove node corresponding to key from the linked list attached to hashed index
 void erase(FILE *fp, HASH_TABLE *H, char *key)
 {
 	int array_index = find(H, key);
@@ -161,6 +175,7 @@ void erase(FILE *fp, HASH_TABLE *H, char *key)
 	}
 }
 
+//remove all nodes from the hash table
 void deleteAll(HASH_TABLE *H)
 {
 	int index;
@@ -170,7 +185,7 @@ void deleteAll(HASH_TABLE *H)
 	{
 		while (H->list[index])
 		{
-			temp = H->list[index];
+			temp - H->list[index];
 			H->list[index] = H->list[index]->next;
 			free(temp);
 		}
