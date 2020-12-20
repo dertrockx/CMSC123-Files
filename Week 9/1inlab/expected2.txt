@@ -1,0 +1,72 @@
+gcc -c main.c
+gcc -c heap.c
+gcc -o run main.o heap.o
+./run < program2.cs
+Heap is empty.
+Printing the heap (rotated +90 degrees)...
+Empty heap!
+
+Inserting key: 27...
+Printing the heap (rotated +90 degrees)...
+27
+
+Inserting key: 16...
+Printing the heap (rotated +90 degrees)...
+16
+	27
+
+Inserting key: 29...
+Printing the heap (rotated +90 degrees)...
+	29
+16
+	27
+
+Inserting key: 12...
+Printing the heap (rotated +90 degrees)...
+	29
+12
+	16
+		27
+
+Inserting key: 3...
+Printing the heap (rotated +90 degrees)...
+	29
+3
+		16
+	12
+		27
+
+Inserting key: 34...
+Printing the heap (rotated +90 degrees)...
+	29
+		34
+3
+		16
+	12
+		27
+
+Inserting key: 10...
+Printing the heap (rotated +90 degrees)...
+		29
+	10
+		34
+3
+		16
+	12
+		27
+
+Inserting key: 1...
+Printing the heap (rotated +90 degrees)...
+		29
+	10
+		34
+1
+		16
+	3
+		12
+			27
+
+Removing all contents...
+Printing the heap (rotated +90 degrees)...
+Empty heap!
+
