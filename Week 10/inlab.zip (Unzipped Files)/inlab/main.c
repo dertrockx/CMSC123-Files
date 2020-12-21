@@ -1,0 +1,81 @@
+#include "closed_hashtable.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+//REMINDER: you are NOT allowed to change this file
+int main()
+{
+
+	char command;
+	char *key;
+	char *data;
+	int result;
+	int i;
+
+	int tsize;
+	float loadFactor;
+	HASH_TABLE *H;
+
+	FILE *fp = fopen("result.txt", "w");
+
+	// get table size then maxsize
+	scanf("%d\n", &tsize);
+	scanf("%f\n", &loadFactor);
+	H = createHashTable(tsize, loadFactor);
+	//assume max key size is 20
+	key = (char *)malloc(sizeof(char) * 20); //first hash function
+	key[0] = '\0';
+	// assume max data size is 100
+	data = (char *)malloc(sizeof(char) * 100);
+	data[0] = '\0';
+
+	while (1)
+	{
+		scanf("%c ", &command);
+		switch (command)
+		{
+		case '+':
+			scanf(" k:%s d:%s\n", key, data);
+			fprintf(fp, "Inserting data %s with key %s\n", data, key);
+			put(fp, &H, key, data);
+			break;
+		case '?':
+			scanf(" k:%s\n", key);
+			fprintf(fp, "Searching data with key: %s ... ", key);
+			result = find(H, key);
+			if (result == -1)
+			{
+				fprintf(fp, "Key: %s not found!\n", key);
+			}
+			else
+			{
+				fprintf(fp, "Key: %s found in index: %d\n", key, result);
+			}
+			break;
+		case 'p':
+			fprintf(fp, "\nHash Table: \n");
+			printTable(fp, H);
+			fprintf(fp, "\n");
+			break;
+		case 'E':
+			fprintf(fp, "Hash table %s empty.\n", isEmpty(H) ? "is" : "is not");
+			break;
+		case 'F':
+			fprintf(fp, "Hash table %s full.\n", isFull(H) ? "is" : "is not");
+			break;
+		case 'C':
+			fprintf(fp, "Deleting all contents.\n");
+			deleteAll(H);
+			break;
+		case 'Q':
+			free(key);
+			free(data);
+			erase(H);
+			return 0;
+		default:
+			fprintf(fp, "Unknown command: %c\n", command);
+		}
+	}
+
+	return 0;
+}

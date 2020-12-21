@@ -1,0 +1,95 @@
+Hash table is empty.
+Inserting data password with key username
+Inserting data jukesonme with key paycar
+Inserting data beautypal with key executie
+Inserting data datadata with key keykey
+Inserting data ipsum with key lorem
+Inserting data santos with key pearl
+Inserting data fleet with key thousand
+Hash table is full.
+Inserting data dwarfs with key seven
+**Alert! Table capacity is reached. Performing rehashing... 
+
+New Hash tableSize: 23. Printing Table before Rehashing... 
+Cell#0: jukesonme
+Cell#1: beautypal
+Cell#2: santos
+Cell#3: ipsum
+Cell#4: password
+Cell#5: fleet
+Cell#6: *empty*
+Cell#7: *empty*
+Cell#8: datadata
+Cell#9: *empty*
+Rehashing complete
+
+Inserting data arfs with key ven
+Inserting data molly with key holly
+Inserting data molyl with key holyl
+Inserting data molly with key holly
+Insertion Error: {key=holly, data=molly} is already in the table
+Hash table is not full.
+
+Hash Table: 
+Cell#0: molly
+Cell#1: fleet
+Cell#2: molyl
+Cell#3: santos
+Cell#4: *empty*
+Cell#5: *empty*
+Cell#6: *empty*
+Cell#7: arfs
+Cell#8: *empty*
+Cell#9: beautypal
+Cell#10: *empty*
+Cell#11: *empty*
+Cell#12: *empty*
+Cell#13: password
+Cell#14: ipsum
+Cell#15: *empty*
+Cell#16: dwarfs
+Cell#17: *empty*
+Cell#18: *empty*
+Cell#19: jukesonme
+Cell#20: *empty*
+Cell#21: datadata
+Cell#22: *empty*
+
+Searching data with key: executie ... Key: executie found in index: 9
+Searching data with key: lorem ... Key: lorem found in index: 14
+Searching data with key: pearl ... Key: pearl found in index: 3
+Searching data with key: lreap ... Key: lreap not found!
+
+Hash Table: 
+Cell#0: molly
+Cell#1: fleet
+Cell#2: molyl
+Cell#3: santos
+Cell#4: *empty*
+Cell#5: *empty*
+Cell#6: *empty*
+Cell#7: arfs
+Cell#8: *empty*
+Cell#9: beautypal
+Cell#10: *empty*
+Cell#11: *empty*
+Cell#12: *empty*
+Cell#13: password
+Cell#14: ipsum
+Cell#15: *empty*
+Cell#16: dwarfs
+Cell#17: *empty*
+Cell#18: *empty*
+Cell#19: jukesonme
+Cell#20: *empty*
+Cell#21: datadata
+Cell#22: *empty*
+
+Inserting data beautypal with key executie
+Insertion Error: {key=executie, data=beautypal} is already in the table
+Searching data with key: hehehe ... Key: hehehe not found!
+Deleting all contents.
+
+Hash Table: 
+*empty
+
