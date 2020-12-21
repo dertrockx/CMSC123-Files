@@ -121,7 +121,7 @@ void put(FILE *fp, HASH_TABLE *H, char *key, char *val)
 	{
 		temp = (DATA *)malloc(sizeof(DATA));
 		temp->next = temp->prev = NULL;
-		temp->key = "";
+		temp->key = (char *)malloc(sizeof(char) * 20);
 		strcpy(temp->key, key);
 		temp->value = (char *)malloc(sizeof(char) * 100);
 		strcpy(temp->value, val);
@@ -185,7 +185,7 @@ void deleteAll(HASH_TABLE *H)
 	{
 		while (H->list[index])
 		{
-			temp - H->list[index];
+			temp = H->list[index];
 			H->list[index] = H->list[index]->next;
 			free(temp);
 		}
