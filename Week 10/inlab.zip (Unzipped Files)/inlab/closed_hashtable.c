@@ -46,75 +46,14 @@ int sumOfChars(char *key)
 	return sum;
 }
 
-//insert a given key to the hash table
-//idea: check first if the hash table is already full,
-//			if it is, perform rehashing first,
-//						rehashing means, creating a new table larger than the current,
-//														and moving the existing keys to the new hash table
-//														by performing hashing to the keys one-at-a-time onto the new hash table
-//						after rehashing is done,
-//								 insert the given key
-//			if no need to rehash, just insert the given key as is
-void put(FILE *fp, HASH_TABLE **H, char *key, char *val)
-{
-	// first let's check if the entry already exists in the table
-	int index_key = sumOfChars(key);
-	int index = hash1(index_key, (*H)->tableSize);
-	int i = 1;
-	printf("Checking first if data pair %s-%s already exist\n", key, val);
-	for (int j = 0; j < (*H)->tableSize; j++)
-	{
-		// checks if the cell is not empty
-		if ((*H)->dataPair[j].key != NULL)
-		{
-			// compares the values if the keys are equal
-			if (strcmp((*H)->dataPair[j].key, key) == 0)
-			{
-				printf("Insertion error! {key=%s, val=%s} alreay exists in the table\n", key, val);
-				return;
-			}
-		}
-	}
-	//performs rehash once size is greater than capacity = ceiling(tableSize*loadFactor)
-	if (isFull(*H))
-	{
-		// HASH_TABLE *new = rehash(*H, fp);
-		// erase(*H);
-		// *H = new;
-		//determine the size of the new hash table
-		//new table size = smallest prime number given twice the size of the currentsize
-		//ex: currentsize is 7, next table size is 17
-		//create a new hash table using the new table size and the same loadFactor
-		//rehash all the keys stored in the old hash table to the new hash table
-		//assign H to the new hash table and cleanly delete (or destroy) the old hash table
-	}
-
-	//insert key to hash table
-	// introduce double hashing
-
-	while ((*H)->dataPair[index].key != NULL)
-	{
-		index = (hash1(index_key, (*H)->tableSize) + i * hash2(index_key)) % (*H)->tableSize;
-		i++;
-	}
-	printf("Inserting at index %d\n", index);
-	DATA temp;
-	// max size of key and value
-	temp.key = (char *)malloc(sizeof(char) * 20);
-	temp.value = (char *)malloc(sizeof(char) * 200);
-
-	// copy all data to temp variable
-	strcpy(temp.key, key);
-	strcpy(temp.value, val);
-
-	(*H)->dataPair[index] = temp;
-	(*H)->size++;
-	printf("Successfully inserted %s-%s!\n", key, val);
-}
-
 void printTable(FILE *fp, HASH_TABLE *H)
 {
 	printf("Hash Table: \n");
+	if (H->size == 0)
+	{
+		fprintf(fp, "*empty");
+		return;
+	}
 	for (int i = 0; i < H->tableSize; i++)
 	{
 		char *tempVal = (char *)malloc(sizeof(char) * 200);
@@ -122,7 +61,7 @@ void printTable(FILE *fp, HASH_TABLE *H)
 			strcpy(tempVal, "*empty*");
 		else
 			strcpy(tempVal, H->dataPair[i].value);
-		printf("Cell#%d: %s\n", i, tempVal);
+		fprintf(fp, "Cell#%d: %s\n", i, tempVal);
 	}
 }
 
@@ -160,11 +99,17 @@ int nextPrime(int val)
 //return 1 for empty, 0 for not
 int isEmpty(HASH_TABLE *h)
 {
-	for (int i = 0; i < h->tableSize; i++)
-	{
-		if (h->dataPair[i].key != NULL)
-			return 1;
-	}
+	// first implementation, not recommened since this yields to O(n)
+	// for (int i = 0; i < h->tableSize; i++)
+	// {
+	// 	if (h->dataPair[i].key != NULL)
+	// 		return 0;
+	// }
+	// return 1;
+
+	// this however yields to O(1)
+	if (h->size == 0)
+		return 1;
 	return 0;
 }
 
@@ -172,7 +117,24 @@ int isEmpty(HASH_TABLE *h)
 //perform closed hashing, using double hashing as collision resolution strategy
 
 //find key return index
-int find(HASH_TABLE *H, char *key);
+int find(HASH_TABLE *H, char *key)
+{
+	DATA temp;
+	for (int i = 0; i < H->tableSize; i++)
+	{
+		if (H->dataPair[i].key != NULL)
+		{
+			temp = H->dataPair[i];
+			if (strcmp(temp.key, key) == 0)
+			{
+				printf("Key %s found!\n", key);
+				return i;
+			}
+		}
+	}
+	printf("key not found :(\n");
+	return -1;
+}
 
 //delete all contents of the hash table
 //note: this doesn't destroy the hash table
@@ -186,7 +148,107 @@ void deleteAll(HASH_TABLE *H)
 	{
 		H->dataPair[i] = temp;
 	}
+	H->size = 0;
 }
 
 //destroy the hash table
-void erase(HASH_TABLE *H);
+void erase(HASH_TABLE *H)
+{
+	printf("Destorying the entire hash table!!!\n");
+	deleteAll(H);
+	free(H->dataPair);
+	free(H);
+}
+
+HASH_TABLE *rehash(HASH_TABLE *H, FILE *fp)
+{
+
+	// creates a new hash table
+	int newSize = nextPrime(H->tableSize * 2);
+
+	fprintf(fp, "New hash tableSize: %d. Printing Table before Rehashing...\n", newSize);
+	printTable(fp, H);
+	HASH_TABLE *new_table = (HASH_TABLE *)malloc(sizeof(HASH_TABLE));
+	new_table = createHashTable(newSize, H->loadFactor);
+
+	// inserting previous data
+	DATA temp;
+	for (int i = 0; i < H->tableSize; i++)
+	{
+		temp = H->dataPair[i];
+		if (temp.key != NULL)
+		{
+			put(fp, &new_table, temp.key, temp.value);
+		}
+	}
+	return new_table;
+}
+
+//insert a given key to the hash table
+//idea: check first if the hash table is already full,
+//			if it is, perform rehashing first,
+//						rehashing means, creating a new table larger than the current,
+//														and moving the existing keys to the new hash table
+//														by performing hashing to the keys one-at-a-time onto the new hash table
+//						after rehashing is done,
+//								 insert the given key
+//			if no need to rehash, just insert the given key as is
+void put(FILE *fp, HASH_TABLE **H, char *key, char *val)
+{
+	// first let's check if the entry already exists in the table
+	int index_key = sumOfChars(key);
+	int index = hash1(index_key, (*H)->tableSize);
+	int i = 1;
+	printf("Checking first if data pair %s-%s already exist\n", key, val);
+	for (int j = 0; j < (*H)->tableSize; j++)
+	{
+		// checks if the cell is not empty
+		if ((*H)->dataPair[j].key != NULL)
+		{
+			// compares the values if the keys are equal
+			if (strcmp((*H)->dataPair[j].key, key) == 0)
+			{
+				fprintf(fp, "Insertion Error: {key=%s, data=%s} is already in the table\n", key, val);
+				return;
+			}
+		}
+	}
+	//performs rehash once size is greater than capacity = ceiling(tableSize*loadFactor)
+	if (isFull(*H))
+	{
+		fprintf(fp, "**Alert! Table capacity is reached. Performing rehashing...\n\n");
+		HASH_TABLE *new = rehash(*H, fp);
+		erase(*H);
+		*H = new;
+		fprintf(fp, "Rehashing complete\n\n");
+		//determine the size of the new hash table
+		//new table size = smallest prime number given twice the size of the currentsize
+		//ex: currentsize is 7, next table size is 17
+		//create a new hash table using the new table size and the same loadFactor
+		//rehash all the keys stored in the old hash table to the new hash table
+		//assign H to the new hash table and cleanly delete (or destroy) the old hash table
+	}
+
+	//insert key to hash table
+	// introduce double hashing
+
+	while ((*H)->dataPair[index].key != NULL)
+	{
+		index = (hash1(index_key, (*H)->tableSize) + i * hash2(index_key)) % (*H)->tableSize;
+		i++;
+	}
+	// printf("Inserting at index %d\n", index);
+	DATA temp;
+	// max size of key and value
+	temp.key = (char *)malloc(sizeof(char) * 20);
+	temp.value = (char *)malloc(sizeof(char) * 200);
+
+	// copy all data to temp variable
+	strcpy(temp.key, key);
+	strcpy(temp.value, val);
+
+	(*H)->dataPair[index] = temp;
+	(*H)->size++;
+
+	printf("Successfully inserted %s-%s!\n", key, val);
+}

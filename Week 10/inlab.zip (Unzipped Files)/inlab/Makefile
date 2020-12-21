@@ -4,7 +4,7 @@ CFLAGS = -O
 default: run
 
 run: build
-	run < program.cs
+	./run < program.cs
 build: compile
 	$(CC) -o run main.o closed_hashtable.o -lm
 compile: main.c closed_hashtable.c closed_hashtable.h

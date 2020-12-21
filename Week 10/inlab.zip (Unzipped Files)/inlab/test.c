@@ -20,12 +20,23 @@ void main()
   put(fp, &h, key, data);
   printTable(fp, h);
 
+  key = "beautypal";
+  data = "executie";
+  printf("Inserting data %s with key %s\n", data, key);
+  put(fp, &h, key, data);
+  printTable(fp, h);
+
+  key = "datadata";
+  data = "keykey";
+  printf("Inserting data %s with key %s\n", data, key);
+  put(fp, &h, key, data);
+  printTable(fp, h);
+
   key = "jukesonme";
   data = "paycar";
   printf("Inserting data %s with key %s\n", data, key);
   put(fp, &h, key, data);
   printTable(fp, h);
 
-  deleteAll(h);
-  printTable(fp, h);
+  erase(h);
 }

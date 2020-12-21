@@ -8,9 +8,9 @@ Inserting data santos with key pearl
 Inserting data fleet with key thousand
 Hash table is full.
 Inserting data dwarfs with key seven
-**Alert! Table capacity is reached. Performing rehashing...
+**Alert! Table capacity is reached. Performing rehashing... 
 
-New hash tableSize: 23. Printing Table before Rehashing...
+New Hash tableSize: 23. Printing Table before Rehashing... 
 Cell#0: jukesonme
 Cell#1: beautypal
 Cell#2: santos
@@ -36,7 +36,7 @@ Cell#1: fleet
 Cell#2: molyl
 Cell#3: santos
 Cell#4: *empty*
-Cell#5: dwarfs
+Cell#5: *empty*
 Cell#6: *empty*
 Cell#7: arfs
 Cell#8: *empty*
@@ -47,7 +47,7 @@ Cell#12: *empty*
 Cell#13: password
 Cell#14: ipsum
 Cell#15: *empty*
-Cell#16: *empty*
+Cell#16: dwarfs
 Cell#17: *empty*
 Cell#18: *empty*
 Cell#19: jukesonme
@@ -66,7 +66,7 @@ Cell#1: fleet
 Cell#2: molyl
 Cell#3: santos
 Cell#4: *empty*
-Cell#5: dwarfs
+Cell#5: *empty*
 Cell#6: *empty*
 Cell#7: arfs
 Cell#8: *empty*
@@ -77,7 +77,7 @@ Cell#12: *empty*
 Cell#13: password
 Cell#14: ipsum
 Cell#15: *empty*
-Cell#16: *empty*
+Cell#16: dwarfs
 Cell#17: *empty*
 Cell#18: *empty*
 Cell#19: jukesonme
@@ -92,3 +92,4 @@ Deleting all contents.
 
 Hash Table: 
 *empty
+
