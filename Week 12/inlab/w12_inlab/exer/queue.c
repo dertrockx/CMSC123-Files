@@ -13,12 +13,11 @@
 	returns the created queue
 */
 
-QUEUE *createQueue()
-{
+QUEUE* createQueue(){
 	// since `QUEUE` is the same as the `LIST` structure
 	// we can reuse the function `createList()` to create
 	// a queue.
-	return (createList());
+	return(createList());
 }
 
 /*
@@ -33,9 +32,8 @@ QUEUE *createQueue()
 ** enqueue(L, createNode(44)) -> L = [12, 6, 4, 10, 55, 44]
 ** enqueue(L, createNode(66)) -> L = [12, 6, 4, 10, 55, 44, 66]
 */
-void enqueue(QUEUE *Q, NODE *node)
-{
-	appendTail(Q, node);
+void enqueue(QUEUE *Q, NODE* node){
+	appendTail(Q,node);
 }
 
 /*
@@ -50,9 +48,9 @@ void enqueue(QUEUE *Q, NODE *node)
 ** dequeue(L) -> L = [6, 55, 4, 10, 66]; return 12
 ** dequeue(L) -> L = [55, 4, 10, 66]; returns 6
 */
-int dequeue(QUEUE *Q)
-{
+int dequeue(QUEUE *Q){
 	return deleteHead(Q);
 }
+
 
 // implement other functions here

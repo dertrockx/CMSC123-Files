@@ -1,25 +1,25 @@
-// no need to include `list.h`
-// since we are here to implement
-// queue ADT
+#ifndef _QUEUE_H_
+#define _QUEUE_H_
 
-#include "queue.h"
+#include "list.h"
+
+/*
+	a `QUEUE` is a list where insertion is done
+	on one end of the list (e.g. tail) and deletion
+	is done on the other end (e.g. head)
+*/
+typedef LIST QUEUE;
 
 /*
 ** function: createQueue
 ** requirements:
 	none
 ** results:
+	creates an empty queue with specified max length
 	initializes fields of the structure
 	returns the created queue
 */
-
-QUEUE *createQueue()
-{
-	// since `QUEUE` is the same as the `LIST` structure
-	// we can reuse the function `createList()` to create
-	// a queue.
-	return (createList());
-}
+QUEUE* createQueue();
 
 /*
 ** function: enqueue
@@ -33,10 +33,7 @@ QUEUE *createQueue()
 ** enqueue(L, createNode(44)) -> L = [12, 6, 4, 10, 55, 44]
 ** enqueue(L, createNode(66)) -> L = [12, 6, 4, 10, 55, 44, 66]
 */
-void enqueue(QUEUE *Q, NODE *node)
-{
-	appendTail(Q, node);
-}
+void enqueue(QUEUE *Q, NODE* node);
 
 /*
 ** function: dequeue
@@ -50,9 +47,7 @@ void enqueue(QUEUE *Q, NODE *node)
 ** dequeue(L) -> L = [6, 55, 4, 10, 66]; return 12
 ** dequeue(L) -> L = [55, 4, 10, 66]; returns 6
 */
-int dequeue(QUEUE *Q)
-{
-	return deleteHead(Q);
-}
+int dequeue(QUEUE *Q);
 
-// implement other functions here
+
+#endif

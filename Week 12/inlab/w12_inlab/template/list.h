@@ -1,19 +1,18 @@
 #ifndef _LIST_H_
 #define _LIST_H_
 
-typedef struct node_tag
-{
+typedef struct node_tag{
 	int value;
-	struct node_tag *next;
-} NODE;
+	struct node_tag* next;
+}NODE;
 
-typedef struct list_tag
-{
-	NODE *head;
-	NODE *tail;
+
+typedef struct list_tag{
+	NODE* head;
+	NODE* tail;
 	//int length;
 	//int maxLength;
-} LIST;
+}LIST;
 
 /*
 ** requirements: none
@@ -41,7 +40,8 @@ void chkalloc(void *p);
 	initializes fields of the structure
 	returns the created node
 */
-NODE *createNode(int data);
+NODE* createNode(int data);
+
 
 /*
 ** createList requirements: none
@@ -50,7 +50,8 @@ NODE *createNode(int data);
 	initializes `head` field of the structure
 	returns the created list
 */
-LIST *createList();
+LIST* createList();
+
 
 /*
 ** isEmpty requirements: none
@@ -71,7 +72,7 @@ int isEmpty(LIST *L);
 ** appendTail(L, createNode(44)) -> L = [12, 6, 4, 10, 55, 44]
 ** appendTail(L, createNode(66)) -> L = [12, 6, 4, 10, 55, 44, 66]
 */
-void appendTail(LIST *L, NODE *node);
+void appendTail(LIST *L, NODE* node);
 
 /*
 ** requirements:
@@ -84,7 +85,7 @@ void appendTail(LIST *L, NODE *node);
 ** insertHead(L, createNode(44)) -> L = [44, 55, 12, 6, 4, 10]
 ** insertHead(L, createNode(66)) -> L = [66, 44, 55, 12, 6, 4, 10]
 */
-void insertHead(LIST *L, NODE *node);
+void insertHead(LIST *L, NODE* node);
 
 /*
 ** requirements:
@@ -105,5 +106,6 @@ int deleteHead(LIST *L);
 	deletes all nodes of the list the list
 */
 void clear(LIST *L);
+
 
 #endif
